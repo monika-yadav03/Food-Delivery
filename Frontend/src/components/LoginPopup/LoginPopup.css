@@ -1,8 +1,3 @@
-/* ------------------------------- */
-/* 🌟 MODERN LOGIN POPUP STYLING */
-/* ------------------------------- */
-
-/* 🔳 Background Overlay */
 .login-popup {
   position: fixed;
   inset: 0;
@@ -12,9 +7,9 @@
   place-items: center;
   backdrop-filter: blur(6px);
   animation: fadeIn 0.3s ease-in-out;
+  padding: 16px;
 }
 
-/* 🪟 Popup Container */
 .login-popup-container {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
@@ -30,7 +25,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* 🔠 Title Section */
 .login-popup-title {
   display: flex;
   justify-content: space-between;
@@ -44,7 +38,6 @@
   letter-spacing: 0.5px;
 }
 
-/* ❌ Close Button */
 .close-btn {
   background: none;
   border: none;
@@ -59,7 +52,6 @@
   transform: rotate(90deg);
 }
 
-/* ✏️ Input Fields */
 .login-popup-container input {
   padding: 0.8rem 1rem;
   border: 1px solid #ddd;
@@ -76,7 +68,11 @@
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
 
-/* ⚠️ Error Message */
+.login-popup-container input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .error-text {
   color: #e63946;
   font-size: 0.9rem;
@@ -84,7 +80,6 @@
   margin-top: -0.3rem;
 }
 
-/* 🔘 Login Button */
 .login-btn {
   background: linear-gradient(135deg, #007bff, #00b4d8);
   color: #fff;
@@ -98,13 +93,24 @@
   letter-spacing: 0.5px;
 }
 
-.login-btn:hover {
+.login-btn:hover:not(:disabled) {
   background: linear-gradient(135deg, #0066d6, #009fc1);
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
 }
 
-/* 🧠 Signup Hint Text */
+.login-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.login-btn .spinner {
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+}
+
 .signup-text {
   text-align: center;
   font-size: 0.9rem;
@@ -124,7 +130,6 @@
   text-decoration: underline;
 }
 
-/* ✨ Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -145,15 +150,27 @@
   }
 }
 
-/* 📱 Responsive Design */
-@media (max-width: 400px) {
+@media (max-width: 767px) {
   .login-popup-container {
-    padding: 1.5rem;
-    width: 90%;
+    padding: 1.8rem;
+    width: min(92%, 380px);
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .login-popup-title h2 {
     font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .login-popup-container {
+    padding: 1.5rem;
+    width: 92%;
+  }
+
+  .login-popup-title h2 {
+    font-size: 1.25rem;
   }
 
   .login-btn {

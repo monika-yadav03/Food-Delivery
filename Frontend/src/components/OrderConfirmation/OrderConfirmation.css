@@ -1,0 +1,158 @@
+.order-confirmation-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(6px);
+  animation: orderFadeIn 0.3s ease-in-out;
+  padding: 16px;
+}
+
+.order-confirmation-container {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 20px;
+  width: min(90%, 420px);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: orderSlideUp 0.4s ease;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.order-confirmation-icon {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 0.5rem;
+}
+
+.order-confirmation-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.order-confirmation-icon circle {
+  stroke: #22c55e;
+  stroke-width: 2;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  animation: orderStroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.order-confirmation-icon path {
+  stroke: #22c55e;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: orderStroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.5s forwards;
+}
+
+.order-confirmation-container h2 {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  color: #16a34a;
+  font-weight: 700;
+  margin: 0;
+}
+
+.order-confirmation-thanks {
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  color: #333;
+  font-weight: 600;
+  margin: 0;
+}
+
+.order-confirmation-message {
+  font-size: clamp(0.875rem, 2vw, 0.95rem);
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.order-confirmation-delivery {
+  font-size: clamp(0.875rem, 2vw, 0.95rem);
+  color: #16a34a;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.order-confirmation-btn {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  min-width: 120px;
+}
+
+.order-confirmation-btn:hover {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(34, 197, 94, 0.35);
+}
+
+@keyframes orderFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes orderSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes orderStroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .order-confirmation-container {
+    padding: 2rem 1.5rem;
+    width: min(92%, 400px);
+  }
+}
+
+@media (max-width: 400px) {
+  .order-confirmation-container {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .order-confirmation-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .order-confirmation-btn {
+    width: 100%;
+    padding: 0.85rem;
+  }
+}
+
+@media (hover: none) {
+  .order-confirmation-btn:hover {
+    transform: none;
+  }
+}

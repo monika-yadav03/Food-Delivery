@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
+import { useToast } from "../../context/ToastContext";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getTotalCartAmount } =
+  const { cartItems, food_list, removeFromCart, getTotalCartAmount, getCartItemCount } =
     useContext(StoreContext);
-
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const [promoCode, setPromoCode] = useState("");
@@ -14,7 +15,6 @@ const Cart = () => {
   const [message, setMessage] = useState("");
   const [freeShipping, setFreeShipping] = useState(false);
 
-  // ✅ Valid coupons list
   const validCodes = {
     DISCOUNT10: 10,
     SAVE20: 20,
@@ -29,17 +29,28 @@ const Cart = () => {
       if (validCodes[code] === "FREE") {
         setFreeShipping(true);
         setDiscount(0);
-        setMessage("🚚 Free Shipping Applied!");
+        setMessage("Free Shipping Applied!");
+        showToast("Free shipping applied!", "success");
       } else {
         setDiscount(validCodes[code]);
         setFreeShipping(false);
-        setMessage(`🎉 ${validCodes[code]}% Discount Applied!`);
+        setMessage(`${validCodes[code]}% Discount Applied!`);
+        showToast(`${validCodes[code]}% discount applied!`, "success");
       }
     } else {
       setFreeShipping(false);
       setDiscount(0);
-      setMessage("❌ Invalid Promo Code");
+      setMessage("Invalid Promo Code");
+      showToast("Invalid promo code.", "error");
     }
+  };
+
+  const handleCheckout = () => {
+    if (getCartItemCount() === 0) {
+      showToast("Your cart is empty. Add items to proceed.", "error");
+      return;
+    }
+    navigate("/order");
   };
 
   const subtotal = getTotalCartAmount();
@@ -47,9 +58,10 @@ const Cart = () => {
   const deliveryFee = subtotal === 0 ? 0 : freeShipping ? 0 : 2;
   const total = subtotal - discountAmount + deliveryFee;
 
+  const cartEntries = food_list.filter((item) => cartItems[item._id] > 0);
+
   return (
     <div className="cart">
-      {/* ---------------- CART ITEMS ---------------- */}
       <div className="cart-items">
         <div className="cart-items-title">
           <p>Image</p>
@@ -62,35 +74,43 @@ const Cart = () => {
         <br />
         <hr />
 
-        {food_list.map((item) => {
-          if (cartItems[item._id] > 0) {
-            return (
-              <div key={item._id}>
-                <div className="cart-items-title cart-items-item">
-                  <img src={item.image} alt={item.name} />
-                  <p>{item.name}</p>
-                  <p>${item.price}</p>
-                  <p>{cartItems[item._id]}</p>
-                  <p>${item.price * cartItems[item._id]}</p>
-                  <p
-                    className="remove"
-                    onClick={() => removeFromCart(item._id)}
-                  >
-                    X
-                  </p>
-                </div>
-                <hr />
+        {cartEntries.length === 0 ? (
+          <div className="cart-empty">
+            <p>Your cart is empty.</p>
+            <button type="button" onClick={() => navigate("/")}>
+              Browse Menu
+            </button>
+          </div>
+        ) : (
+          cartEntries.map((item) => (
+            <div key={item._id}>
+              <div className="cart-items-title cart-items-item">
+                <img src={item.image} alt={item.name} />
+                <p data-label="Title">{item.name}</p>
+                <p data-label="Price">${item.price}</p>
+                <p data-label="Qty">{cartItems[item._id]}</p>
+                <p data-label="Total">${item.price * cartItems[item._id]}</p>
+                <p
+                  className="remove"
+                  onClick={() => {
+                    removeFromCart(item._id);
+                    showToast(`${item.name} removed from cart.`, "info");
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Remove ${item.name} from cart`}
+                  onKeyDown={(e) => e.key === "Enter" && removeFromCart(item._id)}
+                >
+                  X
+                </p>
               </div>
-            );
-          } else {
-            return null;
-          }
-        })}
+              <hr />
+            </div>
+          ))
+        )}
       </div>
 
-      {/* ---------------- CART TOTAL + PROMO ---------------- */}
       <div className="cart-bottom">
-        {/* ---- TOTAL SECTION ---- */}
         <div className="cart-total">
           <h2>Cart Totals</h2>
           <div>
@@ -115,12 +135,11 @@ const Cart = () => {
               <b>${total.toFixed(2)}</b>
             </div>
           </div>
-          <button onClick={() => navigate("/order")}>
+          <button type="button" onClick={handleCheckout}>
             PROCEED TO CHECKOUT
           </button>
         </div>
 
-        {/* ---- PROMO SECTION ---- */}
         <div className="cart-promocode">
           <p>If you have a promo code, enter it here:</p>
           <div className="cart-promocode-input">
@@ -129,8 +148,11 @@ const Cart = () => {
               placeholder="Promo code"
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
+              aria-label="Promo code"
             />
-            <button onClick={handleApplyPromo}>Apply</button>
+            <button type="button" onClick={handleApplyPromo}>
+              Apply
+            </button>
           </div>
           {message && <p className="promo-message">{message}</p>}
         </div>

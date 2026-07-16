@@ -1,19 +1,13 @@
-import { createContext, useState, useMemo } from "react";
+import { useState } from "react";
 import { food_list } from "../assets/assets";
-
-export const StoreContext = createContext(null);
+import { StoreContext } from "./StoreContext";
 
 const StoreContextProvider = ({ children }) => {
-  // 🛒 Cart States
   const [cartItems, setCartItems] = useState({});
-  
-  // 🔐 Login Token (for demo)
   const [token, setToken] = useState(null);
-
-  // 🔍 Search Query
   const [searchQuery, setSearchQuery] = useState("");
+  const [category, setCategory] = useState("All");
 
-  // 🛒 Add to Cart
   const addToCart = (itemId) => {
     setCartItems((prev) => ({
       ...prev,
@@ -21,7 +15,6 @@ const StoreContextProvider = ({ children }) => {
     }));
   };
 
-  // ❌ Remove from Cart
   const removeFromCart = (itemId) => {
     setCartItems((prev) => {
       if (!prev[itemId]) return prev;
@@ -31,7 +24,10 @@ const StoreContextProvider = ({ children }) => {
     });
   };
 
-  // 💰 Get Total Cart Amount
+  const clearCart = () => {
+    setCartItems({});
+  };
+
   const getTotalCartAmount = () => {
     let total = 0;
     for (const id in cartItems) {
@@ -41,41 +37,48 @@ const StoreContextProvider = ({ children }) => {
     return total;
   };
 
-  // 🔐 Fake Login
-  const loginUser = (email, password) => {
-    if (email && password) {
-      setToken("demoToken123");
-      console.log("✅ User logged in");
-    }
+  const getCartItemCount = () => {
+    return Object.values(cartItems).reduce((sum, qty) => sum + qty, 0);
   };
 
-  // 🚪 Logout
+  const resetHomeView = () => {
+    setSearchQuery("");
+    setCategory("All");
+  };
+
+  const loginUser = (email, password) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (email?.trim() && password?.trim()) {
+          setToken("demoToken123");
+          resolve();
+        } else {
+          reject(new Error("Invalid credentials"));
+        }
+      }, 800);
+    });
+  };
+
   const logoutUser = () => {
     setToken(null);
-    console.log("❌ User logged out");
   };
 
-  // 🔍 Filter food list based on search query (optimized)
-  const filteredFoodList = useMemo(() => {
-    if (!searchQuery) return food_list;
-    return food_list.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [searchQuery]);
-
-  // 🌍 Global Context Value
   const contextValue = {
-    food_list: filteredFoodList, // auto updates with search
-    all_food_list: food_list, // keep original list if needed
+    food_list,
     cartItems,
     addToCart,
     removeFromCart,
+    clearCart,
     getTotalCartAmount,
+    getCartItemCount,
     token,
     loginUser,
     logoutUser,
     searchQuery,
     setSearchQuery,
+    category,
+    setCategory,
+    resetHomeView,
   };
 
   return (

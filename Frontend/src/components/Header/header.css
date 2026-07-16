@@ -1,63 +1,91 @@
 .header {
-  height: 34vw;
-  margin: 30px auto;
+  height: clamp(200px, 34vw, 480px);
+  margin: 20px auto;
+  margin-left: 5%;
+  margin-right: 5%;
   background: url("/header_img.png") no-repeat center;
   background-size: contain;
   position: relative;
+  max-width: 100%;
 }
 
 .header-content {
   position: absolute;
-  padding-left: 10%;
+  padding-left: 5%;
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 1.5vw;
+  gap: clamp(8px, 1.5vw, 16px);
   max-width: 50%;
   bottom: 10%;
-  left: 6vw;
+  left: 0;
   animation: fadeIn 3s;
 }
 
 .header-content h2 {
   font-weight: 500;
   color: white;
-  font-size: max(4.5vw, 22px);
+  font-size: clamp(20px, 4.5vw, 42px);
+  line-height: 1.2;
 }
 
 .header-content p {
   color: white;
-  font-size: 1vw;
+  font-size: clamp(12px, 1vw, 16px);
+  line-height: 1.5;
 }
 
 .header-content button {
   border: none;
   color: #747474;
   font-weight: 500;
-  padding: 1vw 2.3vw;
+  padding: clamp(8px, 1vw, 14px) clamp(16px, 2.3vw, 28px);
   background-color: white;
-  font-size: max(1vw, 13px);
+  font-size: clamp(12px, 1vw, 15px);
   border-radius: 50px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-@media (max-width: 1050px) {
+.header-content button:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 1023px) {
   .header {
-    height: 38vw;
+    height: clamp(180px, 38vw, 360px);
+    margin: 16px 4%;
   }
-  .header-contents {
-    max-width: 100%;
+
+  .header-content {
+    max-width: 60%;
   }
 }
 
-@media (max-width: 750px) {
-  .header-contents {
-    max-width: 65%;
+@media (max-width: 767px) {
+  .header {
+    height: clamp(160px, 45vw, 280px);
+    margin: 12px 4%;
   }
-  .header-contents p {
+
+  .header-content {
+    max-width: 75%;
+    padding-left: 4%;
+    bottom: 8%;
+  }
+
+  .header-content p {
     display: none;
   }
-  .header-contents button {
-    padding: 2vw 4vw;
+}
+
+@media (max-width: 480px) {
+  .header-content h2 {
+    font-size: 18px;
+  }
+
+  .header-content button {
+    padding: 8px 16px;
+    font-size: 12px;
   }
 }

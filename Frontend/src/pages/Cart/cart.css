@@ -1,10 +1,12 @@
 .cart {
   margin-top: 100px;
-  padding: 0 5vw;
+  padding: 0 5%;
   font-family: "Poppins", sans-serif;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* ---------- Cart Items ---------- */
 .cart-items-title {
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
@@ -18,7 +20,7 @@
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
   align-items: center;
-  margin: 10px 0px;
+  margin: 10px 0;
   color: black;
   text-align: center;
   background: #ffffff;
@@ -28,7 +30,6 @@
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
 
-/* Hover effect on cart item */
 .cart-items-item:hover {
   transform: scale(1.01);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -39,6 +40,7 @@
   width: 50px;
   margin: auto;
   border-radius: 6px;
+  object-fit: cover;
 }
 
 .cart hr {
@@ -54,7 +56,6 @@
   transition: all 0.3s ease;
 }
 
-/* Hover on remove (X) */
 .cart-items-item .remove:hover {
   color: #fff;
   background-color: red;
@@ -62,19 +63,44 @@
   border-radius: 4px;
 }
 
-/* ---------- Cart Bottom Section ---------- */
+.cart-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+}
+
+.cart-empty p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.cart-empty button {
+  background: tomato;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cart-empty button:hover {
+  background: #ff6347;
+}
+
 .cart-bottom {
-  margin-top: 80px;
+  margin-top: 60px;
   display: flex;
   justify-content: space-between;
-  gap: max(12vw, 20px);
+  gap: 40px;
   align-items: flex-start;
   flex-wrap: wrap;
 }
 
-/* ---------- Cart Total ---------- */
 .cart-total {
   flex: 1;
+  min-width: 280px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -86,26 +112,26 @@
 
 .cart-total h2 {
   color: #333;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 }
 
 .cart-total-details {
   display: flex;
   justify-content: space-between;
   color: #555;
-  font-size: 15px;
+  font-size: clamp(14px, 1.5vw, 15px);
 }
 
 .cart-total hr {
-  margin: 10px 0px;
+  margin: 10px 0;
 }
 
-/* Checkout button */
 .cart-total button {
   border: none;
   color: white;
   background-color: tomato;
   width: 100%;
-  padding: 14px 0px;
+  padding: 14px 0;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
@@ -117,12 +143,12 @@
 .cart-total button:hover {
   background-color: #ff4d2e;
   box-shadow: 0 4px 12px rgba(255, 99, 71, 0.5);
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
-/* ---------- Promo Code ---------- */
 .cart-promocode {
   flex: 1;
+  min-width: 280px;
   background: #fafafa;
   padding: 25px;
   border-radius: 8px;
@@ -131,7 +157,7 @@
 
 .cart-promocode p {
   color: #555;
-  font-size: 14px;
+  font-size: clamp(13px, 1.5vw, 14px);
 }
 
 .cart-promocode-input {
@@ -142,6 +168,7 @@
   background-color: #eaeaea;
   border-radius: 4px;
   padding: 10px;
+  gap: 8px;
 }
 
 .cart-promocode-input input {
@@ -150,13 +177,13 @@
   outline: none;
   padding-left: 10px;
   flex: 1;
+  min-width: 0;
   font-size: 14px;
   color: #333;
 }
 
 .cart-promocode-input button {
-  width: max(10vw, 120px);
-  padding: 10px 5px;
+  padding: 10px 16px;
   background-color: black;
   border: none;
   color: white;
@@ -165,53 +192,125 @@
   font-weight: 600;
   font-size: 14px;
   transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* Hover on promo submit */
 .cart-promocode-input button:hover {
   background-color: #333;
-  transform: scale(1.05);
 }
 
-/* ---------- Responsive Design ---------- */
-@media (max-width: 1024px) {
+.promo-message {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .cart {
+    margin-top: 80px;
+    padding: 0 4%;
+  }
+
   .cart-items-title,
   .cart-items-item {
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.7fr;
+    grid-template-columns: 0.8fr 1.5fr 0.8fr 0.8fr 0.8fr 0.5fr;
     font-size: 12px;
   }
-}
 
-@media (max-width: 750px) {
   .cart-bottom {
     flex-direction: column;
-    gap: 40px;
-  }
-
-  .cart-items-title {
-    display: none; /* Hide table headers on small screens */
-  }
-
-  .cart-items-item {
-    grid-template-columns: 1fr 1fr;
-    text-align: left;
-    row-gap: 10px;
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-  }
-
-  .cart-items-item img {
-    width: 70px;
+    gap: 30px;
   }
 
   .cart-total,
   .cart-promocode {
     width: 100%;
   }
+}
 
-  .cart-total button,
+/* Mobile */
+@media (max-width: 767px) {
+  .cart {
+    margin-top: 70px;
+  }
+
+  .cart-items-title {
+    display: none;
+  }
+
+  .cart-items-item {
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto;
+    text-align: left;
+    row-gap: 8px;
+    column-gap: 16px;
+    padding: 16px;
+    position: relative;
+  }
+
+  .cart-items-item img {
+    grid-row: 1 / 3;
+    width: 80px;
+    height: 80px;
+    margin: 0;
+    object-fit: cover;
+  }
+
+  .cart-items-item p[data-label="Title"] {
+    grid-column: 2;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .cart-items-item p[data-label="Price"],
+  .cart-items-item p[data-label="Qty"],
+  .cart-items-item p[data-label="Total"] {
+    grid-column: 2;
+    font-size: 13px;
+    color: #666;
+  }
+
+  .cart-items-item p[data-label="Price"]::before {
+    content: "Price: ";
+    font-weight: 500;
+  }
+
+  .cart-items-item p[data-label="Qty"]::before {
+    content: "Qty: ";
+    font-weight: 500;
+  }
+
+  .cart-items-item p[data-label="Total"]::before {
+    content: "Total: ";
+    font-weight: 500;
+  }
+
+  .cart-items-item .remove {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+
+  .cart-promocode-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .cart-promocode-input button {
     width: 100%;
+  }
+}
+
+@media (hover: none) {
+  .cart-items-item:hover {
+    transform: none;
+  }
+
+  .cart-total button:hover {
+    transform: none;
   }
 }

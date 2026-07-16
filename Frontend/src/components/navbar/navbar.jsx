@@ -4,49 +4,69 @@ import { assets } from "../../assets/assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
 
-const Navbar = ({ setShowLogin }) => {
+const Navbar = ({ openLogin }) => {
   const [menu, setMenu] = useState("home");
-  const [searchTerm, setSearchTerm] = useState("");
-  const { getTotalCartAmount, setSearchQuery } = useContext(StoreContext);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const {
+    getTotalCartAmount,
+    searchQuery,
+    setSearchQuery,
+    resetHomeView,
+  } = useContext(StoreContext);
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 🌀 Scroll to top when route changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
 
-  // 📍 Handle menu navigation
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   const handleMenuClick = (menuName) => {
     setMenu(menuName);
+    setMobileMenuOpen(false);
     if (menuName === "home") {
+      resetHomeView();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
-  // 🔍 Search function
   const handleSearch = () => {
-    const query = searchTerm.trim().toLowerCase();
-    if (!query) return; // don't search if empty
-    setSearchQuery(query);
-    navigate("/"); // redirect to homepage (where items are displayed)
-    setSearchTerm(""); // clear search box after search
+    navigate("/");
   };
 
-  // Press Enter to search
   const handleKeyDown = (e) => {
     if (e.key === "Enter") handleSearch();
   };
 
   return (
-    <nav className="navbar">
-      {/* ---------- Logo ---------- */}
-      <Link to="/" onClick={() => handleMenuClick("home")}>
-        <img src={assets.logo} alt="logo" className="logo" />
+    <nav className="navbar" role="navigation" aria-label="Main navigation">
+      <Link to="/" onClick={() => handleMenuClick("home")} className="navbar-logo-link">
+        <img src={assets.logo} alt="Tomato logo" className="logo" />
       </Link>
 
-      {/* ---------- Menu Links ---------- */}
-      <ul className="navbar-menu">
+      <button
+        type="button"
+        className={`navbar-hamburger ${mobileMenuOpen ? "open" : ""}`}
+        onClick={() => setMobileMenuOpen((prev) => !prev)}
+        aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={mobileMenuOpen}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul className={`navbar-menu ${mobileMenuOpen ? "mobile-open" : ""}`}>
         <li>
           <Link
             to="/"
@@ -85,36 +105,53 @@ const Navbar = ({ setShowLogin }) => {
         </li>
       </ul>
 
-      {/* ---------- Right Section ---------- */}
+      {mobileMenuOpen && (
+        <div
+          className="navbar-overlay"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       <div className="navbar-right">
-        {/* 🔍 Search Box */}
         <div className="navbar-search-box">
           <input
-            type="text"
+            type="search"
             placeholder="Search food..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              if (location.pathname !== "/") {
+                navigate("/");
+              }
+            }}
             onKeyDown={handleKeyDown}
+            aria-label="Search food items"
           />
           <img
             src={assets.search_icon}
-            alt="search"
-            className={`search-icon ${searchTerm ? "active" : ""}`}
+            alt=""
+            role="presentation"
+            className={`search-icon ${searchQuery ? "active" : ""}`}
             onClick={handleSearch}
             title="Search"
           />
         </div>
 
-        {/* 🛒 Cart Icon */}
         <div className="navbar-cart-icon">
-          <Link to="/cart">
-            <img src={assets.basket_icon} alt="basket" />
+          <Link to="/cart" aria-label="View cart">
+            <img src={assets.basket_icon} alt="" role="presentation" />
           </Link>
-          {getTotalCartAmount() > 0 && <div className="dot"></div>}
+          {getTotalCartAmount() > 0 && (
+            <div className="dot" aria-label="Items in cart"></div>
+          )}
         </div>
 
-        {/* 🔐 Login Button */}
-        <button onClick={() => setShowLogin(true)} className="signin-btn">
+        <button
+          type="button"
+          onClick={() => openLogin()}
+          className="signin-btn"
+        >
           Sign Up
         </button>
       </div>
