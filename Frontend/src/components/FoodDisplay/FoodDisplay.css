@@ -1,5 +1,4 @@
 .food-display {
-  /* center the section and limit width on large screens */
   width: min(92%, 1400px);
   margin: 0 auto;
   padding-inline: clamp(8px, 4vw, 48px);
@@ -8,65 +7,20 @@
 }
 
 .food-display h2 {
-  /* keep heading visible and not clipped */
-  padding-inline: 0;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 42px;
+  margin-bottom: 28px;
   font-size: clamp(20px, 2.4vw, 28px);
   font-weight: 600;
   word-break: break-word;
+  color: #262626;
 }
 
 .food-display-list {
   display: grid;
-  gap: 24px;
-  row-gap: 40px;
-  padding: 0 5% 40px;
-}
-
-/* Mobile: 1 column */
-@media (max-width: 767px) {
-  .food-display {
-    padding: 0 4%;
-  }
-
-  .food-display h2 {
-    padding-left: 0;
-    font-size: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .food-display-list {
-    grid-template-columns: 1fr;
-    padding: 0 0 30px;
-    gap: 20px;
-    row-gap: 30px;
-  }
-}
-
-/* Tablet: 2 columns */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .food-display-list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-}
-
-/* Desktop: 3 columns */
-@media (min-width: 1024px) {
-  .food-display-list {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    row-gap: 50px;
-  }
-}
-
-/* Large desktop: 4 columns */
-@media (min-width: 1400px) {
-  .food-display-list {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  grid-auto-flow: row;
+  gap: 20px;
+  row-gap: 32px;
+  padding-bottom: 30px;
 }
 
 .food-display-empty {
@@ -75,4 +29,71 @@
   padding: 40px 20px;
   color: #888;
   font-size: 1rem;
+}
+
+/* Desktop: 4 columns (1440px and above) */
+@media (min-width: 1440px) {
+  .food-display-list {
+    grid-template-columns: repeat(4, minmax(240px, 1fr));
+    gap: 20px;
+    row-gap: 32px;
+  }
+}
+
+/* Laptop: 3 columns (1200px – 1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .food-display-list {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 18px;
+    row-gap: 28px;
+  }
+}
+
+/* Laptop: 3 columns (1024px – 1199px) */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .food-display-list {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 16px;
+    row-gap: 26px;
+  }
+}
+
+/* Tablet: 2 columns (768px – 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .food-display {
+    padding-inline: clamp(12px, 5vw, 40px);
+  }
+
+  .food-display h2 {
+    margin-top: 36px;
+    margin-bottom: 24px;
+    font-size: 22px;
+  }
+
+  .food-display-list {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 16px;
+    row-gap: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+/* Mobile: 1 column (below 768px) */
+@media (max-width: 767px) {
+  .food-display {
+    padding-inline: clamp(8px, 4vw, 28px);
+  }
+
+  .food-display h2 {
+    margin-top: 28px;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .food-display-list {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+    row-gap: 20px;
+    padding-bottom: 20px;
+  }
 }
