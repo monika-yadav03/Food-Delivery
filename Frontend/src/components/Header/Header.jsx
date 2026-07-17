@@ -32,11 +32,13 @@ const Header = () => {
     setCurrentIndex(index)
   }
 
+  const currentBgImage = sliderImages[currentIndex]
+
   return (
     <div 
       className='header'
       style={{
-        backgroundImage: `url(${sliderImages[currentIndex]})`,
+        backgroundImage: `url(${currentBgImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
