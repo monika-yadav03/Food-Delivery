@@ -7,12 +7,19 @@ const StoreContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("All");
+  const [toastMessage, setToastMessage] = useState(null);
 
   const addToCart = (itemId) => {
     setCartItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] || 0) + 1,
     }));
+    
+    const foodItem = food_list.find((item) => item._id === itemId);
+    if (foodItem) {
+      setToastMessage(`${foodItem.name} added to cart`);
+      setTimeout(() => setToastMessage(null), 3000);
+    }
   };
 
   const removeFromCart = (itemId) => {
@@ -79,6 +86,8 @@ const StoreContextProvider = ({ children }) => {
     category,
     setCategory,
     resetHomeView,
+    toastMessage,
+    setToastMessage,
   };
 
   return (
