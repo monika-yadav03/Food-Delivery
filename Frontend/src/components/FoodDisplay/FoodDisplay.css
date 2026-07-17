@@ -7,20 +7,13 @@
 }
 
 .food-display h2 {
-  margin-top: 42px;
-  margin-bottom: 28px;
-  font-size: clamp(20px, 2.4vw, 28px);
-  font-weight: 600;
+  margin-top: 48px;
+  margin-bottom: 12px;
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 700;
   word-break: break-word;
   color: #262626;
-}
-
-.food-display-list {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 20px;
-  row-gap: 32px;
-  padding-bottom: 30px;
+  animation: slideUp 0.5s ease;
 }
 
 .food-display-empty {
@@ -31,12 +24,21 @@
   font-size: 1rem;
 }
 
+.food-display-list {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 16px;
+  row-gap: 24px;
+  padding-bottom: 30px;
+  animation: slideUp 0.6s ease;
+}
+
 /* Desktop: 4 columns (1440px and above) */
 @media (min-width: 1440px) {
   .food-display-list {
     grid-template-columns: repeat(4, minmax(240px, 1fr));
-    gap: 20px;
-    row-gap: 32px;
+    gap: 16px;
+    row-gap: 24px;
   }
 }
 
@@ -44,8 +46,8 @@
 @media (min-width: 1200px) and (max-width: 1439px) {
   .food-display-list {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
-    gap: 18px;
-    row-gap: 28px;
+    gap: 14px;
+    row-gap: 20px;
   }
 }
 
@@ -53,8 +55,8 @@
 @media (min-width: 1024px) and (max-width: 1199px) {
   .food-display-list {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
-    gap: 16px;
-    row-gap: 26px;
+    gap: 12px;
+    row-gap: 18px;
   }
 }
 
@@ -66,15 +68,15 @@
 
   .food-display h2 {
     margin-top: 36px;
-    margin-bottom: 24px;
-    font-size: 22px;
+    margin-bottom: 10px;
+    font-size: 24px;
   }
 
   .food-display-list {
     grid-template-columns: repeat(2, minmax(220px, 1fr));
-    gap: 16px;
-    row-gap: 24px;
-    padding-bottom: 24px;
+    gap: 12px;
+    row-gap: 18px;
+    padding-bottom: 20px;
   }
 }
 
@@ -86,14 +88,14 @@
 
   .food-display h2 {
     margin-top: 28px;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     font-size: 20px;
   }
 
   .food-display-list {
     grid-template-columns: repeat(1, 1fr);
-    gap: 12px;
-    row-gap: 20px;
-    padding-bottom: 20px;
+    gap: 10px;
+    row-gap: 14px;
+    padding-bottom: 16px;
   }
 }

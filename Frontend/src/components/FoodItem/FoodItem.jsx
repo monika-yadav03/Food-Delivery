@@ -8,6 +8,12 @@ const FoodItem = ({ id, name, price, description, image }) => {
 
   return (
     <div className="food-item">
+      {/* Bestseller Badge */}
+      <div className="food-item-badge bestseller">⭐ Bestseller</div>
+      
+      {/* Delivery Time Badge */}
+      <div className="food-item-badge delivery">📍 30 min</div>
+
       <div className="food-item-img-container">
         <img className="food-item-image" src={image} alt={name} />
 
