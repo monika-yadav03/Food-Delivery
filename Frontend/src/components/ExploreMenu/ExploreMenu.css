@@ -1,9 +1,10 @@
 .explore-menu {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  /* responsive horizontal padding */
-  padding-inline: clamp(12px, 5vw, 64px);
+  gap: 14px;
+  width: min(92%, 1400px);
+  margin: 0 auto;
+  padding-inline: clamp(8px, 4vw, 48px);
   max-width: 100%;
   overflow: hidden;
   align-items: center;
@@ -25,16 +26,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(12px, 3vw, 30px);
+  gap: clamp(12px, 3vw, 28px);
   text-align: center;
-  margin: 20px 0;
-  /* allow horizontal scrolling only on very small screens */
-  overflow-x: auto;
+  margin: 14px 0;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding-bottom: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
+  /* default: show as a centered row and allow wrapping if space is constrained */
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+}
+
+/* small screens: allow smooth horizontal scrolling */
+@media (max-width: 767px){
+  .explore-menu-list{ overflow-x: auto; flex-wrap: nowrap; gap: 12px }
+}
+
+/* laptop and desktop: allow wrap when needed to avoid overflow */
+@media (min-width: 1024px){
+  .explore-menu-list{ flex-wrap: wrap; justify-content: center }
 }
 
 .explore-menu-list::-webkit-scrollbar {

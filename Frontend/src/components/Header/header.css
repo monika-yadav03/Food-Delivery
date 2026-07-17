@@ -1,20 +1,31 @@
 .header {
-  height: clamp(200px, 34vw, 480px);
-  margin: 20px auto;
-  /* use responsive horizontal padding instead of fixed margins */
-  padding-inline: clamp(12px, 5vw, 64px);
+  /* center the hero and limit its visual width on large screens */
+  width: min(92%, 1400px);
+  margin: 30px auto;
+  border-radius: 20px;
+  overflow: hidden;
+  /* slightly reduced height for laptop/desktop while staying responsive */
+  height: clamp(160px, 28vw, 420px);
   background: url("/header_img.png") no-repeat center center;
-  /* cover keeps the image scaling properly without leaving empty space */
   background-size: cover;
   position: relative;
-  max-width: 100%;
-  overflow: hidden;
+}
+
+/* ensure header content stays within the rounded container */
+.header::before{
+  content: "";
+  display:block;
+  width:100%;
+  height:100%;
+  position:absolute;
+  left:0;top:0;
+  z-index:0;
 }
 
 .header-content {
   position: absolute;
-  /* keep content inside banner and responsive */
-  padding-inline-start: clamp(12px, 3vw, 40px);
+  z-index: 1;
+  padding-inline-start: clamp(16px, 3.5vw, 48px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -22,8 +33,25 @@
   max-width: min(70%, 720px);
   bottom: 10%;
   left: 0;
-  animation: fadeIn 1.2s ease;
+  animation: fadeIn 1s ease;
   word-wrap: break-word;
+}
+
+.header-content h2{ /* ensure heading never clips */
+  margin:0;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 1024px){
+  .header{ width: calc(100% - 40px); margin: 20px auto; border-radius: 14px }
+  .header-content{ max-width: 72% }
+}
+
+@media (max-width: 767px){
+  .header{ height: clamp(140px, 40vw, 300px); margin: 12px auto }
+  .header-content{ max-width: 86%; padding-inline-start: 12px; bottom: 8% }
+  .header-content p{ display:none }
 }
 
 .header-content h2 {

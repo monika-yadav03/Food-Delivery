@@ -7,13 +7,40 @@
   backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-wrap: nowrap; /* keep items on single line on wider screens */
+  justify-content: center; /* center the content area */
   align-items: center;
-  /* responsive horizontal padding to avoid overflow */
-  padding: clamp(8px, 1.8vw, 18px) min(6%, 48px);
-  gap: 12px;
+  padding-block: clamp(8px, 1.4vw, 16px);
+  padding-inline: clamp(12px, 4vw, 64px);
+  gap: 16px;
   transition: all 0.3s ease-in-out;
+}
+
+/* create an inner flexible container so items stay centered while allowing full-width nav */
+.navbar > .navbar-inner{ display:flex; align-items:center; justify-content:space-between; width: min(92%, 1400px); }
+
+.navbar-logo-link{ margin-right: 18px; }
+
+.navbar-menu{ flex: 1 1 auto; display:flex; justify-content:center; }
+.navbar-right{ flex:0 0 auto; display:flex; align-items:center; gap: clamp(10px, 2vw, 28px); }
+
+@media (max-width: 1023px){
+  .navbar{ padding-inline: clamp(10px, 5vw, 28px); }
+  .navbar{ flex-wrap: wrap }
+  .navbar-menu{ display:none }
+  .navbar-hamburger{ display:flex }
+}
+
+@media (min-width: 1024px) and (max-width: 1440px){
+  /* laptop-specific spacing tweaks */
+  .logo{ width: clamp(96px, 6.5vw, 120px) }
+  .navbar-search-box input{ width: clamp(180px, 16vw, 300px) }
+  .signin-btn{ padding: 9px 22px }
+}
+
+@media (max-width: 767px){
+  .navbar{ padding-inline: 12px }
+  .navbar-right{ gap: 10px }
 }
 
 .navbar-logo-link {
