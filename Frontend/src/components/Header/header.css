@@ -1,25 +1,27 @@
 .header {
-  /* center the hero and limit its visual width on large screens */
   width: min(92%, 1400px);
   margin: 30px auto;
   border-radius: 20px;
   overflow: hidden;
-  /* slightly reduced height for laptop/desktop while staying responsive */
   height: clamp(160px, 28vw, 420px);
-  background: url("/header_img.png") no-repeat center center;
-  background-size: cover;
   position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* smooth fade transition for background changes */
+  transition: background-image 0.6s ease-in-out;
 }
 
 /* ensure header content stays within the rounded container */
-.header::before{
+.header::before {
   content: "";
-  display:block;
-  width:100%;
-  height:100%;
-  position:absolute;
-  left:0;top:0;
-  z-index:0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
 }
 
 .header-content {
@@ -37,21 +39,85 @@
   word-wrap: break-word;
 }
 
-.header-content h2{ /* ensure heading never clips */
-  margin:0;
+.header-content h2 {
+  margin: 0;
   white-space: normal;
   overflow-wrap: break-word;
 }
 
-@media (max-width: 1024px){
-  .header{ width: calc(100% - 40px); margin: 20px auto; border-radius: 14px }
-  .header-content{ max-width: 72% }
+/* Navigation dots */
+.header-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 2;
 }
 
-@media (max-width: 767px){
-  .header{ height: clamp(140px, 40vw, 300px); margin: 12px auto }
-  .header-content{ max-width: 86%; padding-inline-start: 12px; bottom: 8% }
-  .header-content p{ display:none }
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
+}
+
+.dot.active {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+@media (max-width: 1024px) {
+  .header {
+    width: calc(100% - 40px);
+    margin: 20px auto;
+    border-radius: 14px;
+  }
+
+  .header-content {
+    max-width: 72%;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    height: clamp(140px, 40vw, 300px);
+    margin: 12px auto;
+  }
+
+  .header-content {
+    max-width: 86%;
+    padding-inline-start: 12px;
+    bottom: 8%;
+  }
+
+  .header-content p {
+    display: none;
+  }
+
+  .header-dots {
+    bottom: 12px;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dot.active {
+    transform: scale(1.15);
+  }
 }
 
 .header-content h2 {
