@@ -12,6 +12,8 @@ const Navbar = ({ openLogin }) => {
     searchQuery,
     setSearchQuery,
     resetHomeView,
+    getCartItemCount,
+    toastMessage,
   } = useContext(StoreContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,6 +32,22 @@ const Navbar = ({ openLogin }) => {
       document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.querySelector(".navbar");
+      if (navbar) {
+        if (window.scrollY > 10) {
+          navbar.style.boxShadow = "0 2px 12px rgba(0, 0, 0, 0.1)";
+        } else {
+          navbar.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.04)";
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleMenuClick = (menuName) => {
     setMenu(menuName);
@@ -142,8 +160,10 @@ const Navbar = ({ openLogin }) => {
           <Link to="/cart" aria-label="View cart">
             <img src={assets.basket_icon} alt="" role="presentation" />
           </Link>
-          {getTotalCartAmount() > 0 && (
-            <div className="dot" aria-label="Items in cart"></div>
+          {getCartItemCount() > 0 && (
+            <span className="cart-badge" aria-label={`${getCartItemCount()} items in cart`}>
+              {getCartItemCount()}
+            </span>
           )}
         </div>
 
@@ -155,6 +175,12 @@ const Navbar = ({ openLogin }) => {
           Sign Up
         </button>
       </div>
+
+      {toastMessage && (
+        <div className="navbar-toast" role="status" aria-live="polite">
+          {toastMessage}
+        </div>
+      )}
     </nav>
   );
 };

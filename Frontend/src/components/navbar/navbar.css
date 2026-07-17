@@ -71,7 +71,7 @@
 
 .navbar-menu {
   display: flex;
-  gap: 32px;
+  gap: clamp(28px, 3.5vw, 52px);
   align-items: center;
   font-weight: 500;
   font-size: 14px;
@@ -110,6 +110,10 @@
   color: #ff4b2b;
 }
 
+.navbar-menu .active::after {
+  width: 100%;
+}
+
 .navbar-overlay {
   display: none;
 }
@@ -141,7 +145,7 @@
   outline: none;
   background: transparent;
   font-size: 14px;
-  width: clamp(120px, 18vw, 320px);
+  width: clamp(140px, 24vw, 380px);
   min-width: 0;
   padding-left: 6px;
   color: #333;
@@ -172,7 +176,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: clamp(14px, 2.2vw, 28px);
+  gap: clamp(16px, 2.8vw, 36px);
   flex-shrink: 0;
 }
 
@@ -196,6 +200,25 @@
 .navbar-cart-icon img {
   width: 22px;
   height: 22px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #ff4b2b;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(255, 75, 43, 0.35);
+  animation: slideDown 0.3s ease;
 }
 
 .dot {
@@ -234,6 +257,26 @@
 
 .signin-btn:active {
   transform: translateY(0);
+}
+
+.navbar-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff4b2b, #ff6a3d);
+  color: white;
+  padding: clamp(12px, 2vw, 16px) clamp(16px, 3vw, 24px);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(255, 75, 43, 0.35);
+  z-index: 1001;
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 90vw;
+  word-wrap: break-word;
+  text-align: center;
+  letter-spacing: 0.3px;
 }
 
 /* Tablet: 768px – 1023px */
@@ -324,6 +367,14 @@
     width: 20px;
     height: 20px;
   }
+
+  .cart-badge {
+    width: 19px;
+    height: 19px;
+    font-size: 10px;
+    top: -5px;
+    right: -5px;
+  }
 }
 
 /* Mobile: 320px – 767px */
@@ -362,6 +413,14 @@
     right: 3px;
   }
 
+  .cart-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    top: -4px;
+    right: -4px;
+  }
+
   .navbar-search-box {
     padding: 7px 12px;
   }
@@ -374,6 +433,12 @@
     width: 16px;
     height: 16px;
     margin-left: 6px;
+  }
+
+  .navbar-toast {
+    bottom: 16px;
+    padding: 10px 16px;
+    font-size: 13px;
   }
 }
 
