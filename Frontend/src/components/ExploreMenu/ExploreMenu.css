@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 0 5%;
+  /* responsive horizontal padding */
+  padding-inline: clamp(12px, 5vw, 64px);
   max-width: 100%;
   overflow: hidden;
+  align-items: center;
 }
 
 .explore-menu h1 {
@@ -21,15 +23,18 @@
 
 .explore-menu-list {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  gap: clamp(16px, 3vw, 30px);
+  gap: clamp(12px, 3vw, 30px);
   text-align: center;
   margin: 20px 0;
+  /* allow horizontal scrolling only on very small screens */
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding-bottom: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .explore-menu-list::-webkit-scrollbar {

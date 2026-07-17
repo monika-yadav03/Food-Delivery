@@ -1,15 +1,18 @@
 .food-display {
-  padding: 0 5%;
+  /* responsive horizontal padding */
+  padding-inline: clamp(12px, 5vw, 64px);
   max-width: 100%;
   overflow: hidden;
 }
 
 .food-display h2 {
-  padding-left: 5%;
+  /* keep heading visible and not clipped */
+  padding-inline: 0;
   margin-top: 30px;
   margin-bottom: 30px;
-  font-size: max(2vw, 22px);
+  font-size: clamp(20px, 2.4vw, 28px);
   font-weight: 600;
+  word-break: break-word;
 }
 
 .food-display-list {

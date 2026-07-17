@@ -10,7 +10,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 8%;
+  /* responsive horizontal padding to avoid overflow */
+  padding: clamp(8px, 1.8vw, 18px) min(6%, 48px);
   gap: 12px;
   transition: all 0.3s ease-in-out;
 }
@@ -20,7 +21,7 @@
 }
 
 .logo {
-  width: 130px;
+  width: clamp(90px, 8vw, 130px);
   max-width: 100%;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -110,7 +111,8 @@
   outline: none;
   background: transparent;
   font-size: 0.95rem;
-  width: 160px;
+  /* responsive input width */
+  width: clamp(120px, 18vw, 320px);
   min-width: 0;
   padding-left: 6px;
   color: #333;
